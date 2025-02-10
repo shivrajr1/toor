@@ -1,0 +1,28 @@
+.alllink:hover{
+    text-decoration: none;
+    
+}
+.alllink:active{
+    opacity: 1;
+}
+img{
+    height: 250px;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+   
+}
+.allcard{
+    text-align: center;
+    /* max-width: 450px; */
+    background-color: #fff;
+    /* margin: 0.5rem 0 0 0.5rem; */
+    font-size: 16px;
+    border-radius: 10px;
+    color: #000000;
+}
+.allcard:hover{
+    box-shadow: 0 0 20px black;
+    /* opacity: 0.8; */
+    transform: scale(1.1);
+    /* transition-duration: 2s; */
+}

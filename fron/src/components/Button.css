@@ -1,0 +1,17 @@
+
+button{
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 20px;
+    border: 2px solid rgb(225, 225, 225);
+    color: #fff;
+    background-color: rgb(93, 93, 255);
+    font-size: 16px;
+  }
+  button:hover{
+    cursor: pointer;
+    background-color: rgb(68, 68, 219);
+  }
+  button:active{
+    background-color: rgb(93, 93, 255);
+  }
