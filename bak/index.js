@@ -57,11 +57,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-app.get('/',(req,res)=>{
-  res.send("hello world")
-})
-
 app.use('/api/list',listRoute)//multipart
 app.use('/api/',userRoute)// json
 app.use('/api/list/:id/review',reviewRoute)//json
