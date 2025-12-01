@@ -7,7 +7,7 @@ export default function List({list}) {
     <Link to={`/${list._id}` }className='alllink'>
       <div className='allcard' >
       <img src={list.img.url}/>
-      <p><b>Title -</b> {list.title}</p>
+      <p><b>Title -</b> {list.title} Jonathan</p>
       <p><b>Price -</b> &#8377; {list.price.toLocaleString("en-In")}</p>
       </div>
      </Link>

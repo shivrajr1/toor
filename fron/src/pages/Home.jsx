@@ -1,11 +1,13 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState , useEffect ,useContext} from 'react'
 import axios from 'axios'
 import List from '../components/List'
 import './Home.css'
 import { toast } from 'react-toastify';
+import { context } from '../Context_API';
 
 export default function Home() {
   
+  const {search }=useContext(context)
   const [info,setInfo]=useState([]);
   const f_info=async()=>{
     await axios
@@ -26,9 +28,9 @@ export default function Home() {
     
  }, []);
   return (<>
-  
+
     <div className='home_container'>
-        {info && info.map((list,idx)=>{
+        {info && info.filter((e)=>e.title.includes(search.trim())).map((list,idx)=>{
           return(
               <List key={idx} list={list} />
             )

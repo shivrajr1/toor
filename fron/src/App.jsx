@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import Home from './pages/Home';
@@ -14,21 +14,23 @@ import Contact from './pages/Contact'
 import './App.css'
 import PageNotFound from "./pages/PageNotFound";
 import Protectedrout from "./pages/protectedroute"
-function App() {
-  function local(id){
-    localStorage.setItem("user",`${id}`);
-  }
+import { context } from "./Context_API";
 
+function App() {
+  
+  const [user ,setUser]=useState({id:localStorage.getItem('id')})
+  const [search , setSearch]=useState('')
   
   return (
     <>
+    <context.Provider value={{search, setSearch, user, setUser}}>
     <Navbar/>
     <ToastContainer autoClose={2000}closeOnClick={true}position='top-center'closeButton={false}/>
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route element={<Iflogin/>}>
-        <Route path="/signup" element={<Signup local={local} />}/>
-        <Route path="/login" element={<Login local={local} />}/>
+        <Route path="/signup" element={<Signup />}/>
+        <Route path="/login" element={<Login />}/>
         </Route>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
@@ -40,6 +42,7 @@ function App() {
         </Route>
         <Route path="*" element={<PageNotFound/>}/>
       </Routes>
+      </context.Provider>
     </>
   )
   
