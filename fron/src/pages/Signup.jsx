@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {useNavigate ,Link} from 'react-router-dom'
 import axios from 'axios';
 import Button from '../components/Button'
 import {  toast } from 'react-toastify';
 import './Signup.css'
-export default function Signup({local}) {
+import { context } from '../Context_API';
+export default function Signup() {
+
+  const {setUser}=useContext(context)
   let navigate=useNavigate();
   const[info,setInfo]=useState({username:"",email:"",password:""});
   const submit=async(e)=>{
@@ -17,7 +20,8 @@ export default function Signup({local}) {
       if(res.data=='failed registration'){return toast.error("username already registered")}
       toast.success("welcome to wonderlust");
       navigate('/');
-      local(res.data.id);
+      setUser({...res.data})
+      localStorage.setItem('id',res.data.id)
     })
     .catch((err)=>{
       toast.error("something went wrong")

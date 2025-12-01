@@ -1,7 +1,9 @@
-import {React } from 'react'
+import {React, useContext } from 'react'
 import { Outlet ,Navigate} from 'react-router-dom'
+import { context } from '../Context_API'
 
 export default function protectedroute() {
   
-  return localStorage.getItem('user') ? <Outlet/>:<Navigate to='/login'/>
+  const {user}=useContext(context)
+  return user?.id ? <Outlet/>:<Navigate to='/login'/>
 }

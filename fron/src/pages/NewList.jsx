@@ -1,20 +1,21 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState ,useEffect, useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Button from '../components/Button'
 import './NewList.css'
 import { toast } from 'react-toastify'
+import { context } from '../Context_API'
 
 export default function NewList() {
-  useEffect(()=>{
-  },[])
+
+  const {user}=useContext(context)
   let navigate = useNavigate();
   const [info, setInfo] = useState({
     title: '',
     img: '',
     price: '',
     address: '',
-    owner: localStorage.getItem("user"),
+    owner: user?.id,
   });
   let list = async (e) => {
     e.preventDefault();

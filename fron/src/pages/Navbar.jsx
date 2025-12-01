@@ -1,21 +1,27 @@
-import {React  } from 'react'
+import {React ,useContext,useState } from 'react'
 import './Navbar.css'
 import { Link ,useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import MenuIcon from '@mui/icons-material/Menu';
+import DarkMode from '../components/DarkMode';
+import { context } from '../Context_API';
 export default function Navbar() {
+
+  const {search, setSearch, setUser ,user}=useContext(context)
   const navigate=useNavigate()
-  const userId=localStorage.getItem('user');
+
   const dlt=async()=>{
     await axios.delete(`${import.meta.env.VITE_URL}/logout`,{withCredentials: true})
     .then((res)=>{ 
       navigate('/login')
-      localStorage.removeItem('user');
+      setUser({})
+      localStorage.removeItem('id')
     })
     .catch((err)=>{
       console.log(err)
     })
   }
+  
   const menu=()=>{
     let icon=document.getElementById('inmenuone');
     if(icon.className=='inmenuone'){
@@ -45,13 +51,20 @@ export default function Navbar() {
       </b>
       <b>
       <div className="forright">
-      {!userId&&
+      <input 
+      type='text' 
+      placeholder='search'
+      value={search}
+      onChange={e=>setSearch(e.target.value)}
+      style={{width:'60px',margin:'5px',borderRadius:"20px",padding:'5px 5px'}}/>
+      <DarkMode/>
+      {!user?.id&&
       <>
       <Link className='nav_link signup sll' to={'/signup'}>Signup</Link>
       <Link className='nav_link login sll'to={'/login'}>Login</Link>
       </>
       }
-    {userId&&<Link to={"/"}onClick={dlt} className='nav_link logout sll'>Logout</Link>}
+    {user?.id&&<Link to={"/"}onClick={dlt} className='nav_link logout sll'>Logout</Link>}
       </div>
       </b>
     </div>

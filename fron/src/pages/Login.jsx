@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext} from 'react'
 import {useNavigate ,Link} from 'react-router-dom'
 import axios from 'axios';
 import Button from '../components/Button'
 import {  toast } from 'react-toastify';
 import './Login.css';
-export default function Login({local}) {
+import { context } from '../Context_API';
+export default function Login() {
+
+  const {setUser}=useContext(context)
   let navigate=useNavigate();
   const[info,setInfo]=useState({username:"",password:""});
   const submit=async(e)=>{
@@ -18,7 +21,8 @@ export default function Login({local}) {
       }
       toast.success("loged in successfully")
       navigate(-1);
-      local(res.data.id)
+      localStorage.setItem('id',res.data.id)
+      setUser({...res.data})
     })
     .catch((err)=>{
       toast.error("something went wrong")

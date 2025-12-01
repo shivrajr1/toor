@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import { useState ,useEffect} from "react";
 import Button from '../components/Button'
 import axios from 'axios'
 import './UpdateList.css'
 import { toast } from 'react-toastify';
+import { context } from '../Context_API';
 export default function UpdateList() {
+
+  const {user}=useContext(context)
   let navigate = useNavigate();
   let { id } = useParams();
   const[imageurl,setImageurl]=useState('')
@@ -15,7 +18,7 @@ export default function UpdateList() {
     img:'',
     price:'',
     address:'',
-    owner:localStorage.getItem('user'),
+    owner:user?.id,
   });
   let onchng=(e)=>{
     setInfo((preinfo)=>{
@@ -51,7 +54,7 @@ export default function UpdateList() {
     img:info.img,
     price:info.price,
     address:info.address,
-    owner:localStorage.getItem('user'),
+    owner:user?.id,
   }
   ,{
     withCredentials:true,

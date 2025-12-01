@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import Button from '../components/Button';
 import {  toast } from 'react-toastify';
 import './Showreview.css'
+import {context} from '../Context_API'
 
 export default function Showreview({listId,reviews}) {
-
+  const {user}=useContext(context)
   const userId=localStorage.getItem("user")
   const[reviewArray,setArray]=useState(reviews)
 
@@ -34,7 +35,7 @@ export default function Showreview({listId,reviews}) {
           <div key={idx} className="review">
             <div key='review'>{rvw.comment}</div>
             {
-            (userId == reviewArray[idx].owner) 
+            (user?.id == reviewArray[idx].owner) 
             && 
             <span key='delete' onClick={()=>{dlete_review(rvw._id)}}>
             <Button btnName='Delete'   />
