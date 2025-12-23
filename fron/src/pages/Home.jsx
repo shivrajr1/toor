@@ -7,9 +7,10 @@ import { context } from '../Context_API';
 
 export default function Home() {
   
-  const {search }=useContext(context)
+  const {search, setLoading }=useContext(context)
   const [info,setInfo]=useState([]);
   const f_info=async()=>{
+    setLoading(true)
     await axios
        .get(`${import.meta.env.VITE_URL}/list`,{withCredentials:true})
        .then((res) => {
@@ -20,7 +21,10 @@ export default function Home() {
        .catch((err) => {
         localStorage.removeItem('user')
           toast.error("somethig went wrong")
-       });
+       })
+       .finally(()=>{
+        setLoading(false)
+       })
        
   }
   useEffect(() => {

@@ -10,6 +10,7 @@ const LocalStrategy=require("passport-local");
 const listRoute=require('./routers/listroute');
 const reviewRoute=require('./routers/reviewroute');
 const userRoute=require('./routers/userroute');
+const striperout=require('./routers/striperoute')
 
 const cors=require('cors')
 
@@ -57,9 +58,11 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 app.use('/api/list',listRoute)//multipart
 app.use('/api/',userRoute)// json
 app.use('/api/list/:id/review',reviewRoute)//json
+app.use('/api/create-payment-intent',striperout)
 
 
 app.use(express.static(path.join(__dirname, '../fron', 'dist')));

@@ -1,61 +1,71 @@
-import React, { useState, useContext} from 'react'
-import {useNavigate ,Link} from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import axios from 'axios';
 import Button from '../components/Button'
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import './Login.css';
 import { context } from '../Context_API';
+
+
 export default function Login() {
 
-  const {setUser}=useContext(context)
-  let navigate=useNavigate();
-  const[info,setInfo]=useState({username:"",password:""});
-  const submit=async(e)=>{
-    e.preventDefault();
-    if(info.username.trim()===''||info.password===''){return toast.error("input username and password")}
-    await axios.post(`${import.meta.env.VITE_URL}/login`,info,{withCredentials: true})
-    .then((res)=>{
+  const { setUser, setLoading } = useContext(context)
+  let navigate = useNavigate();
+  const [info, setInfo] = useState({ username: "", password: "" });
 
-      if(res.data==='login failed'){
-        return toast.error("username or password incorrect")
-      }
-      toast.success("loged in successfully")
-      navigate(-1);
-      localStorage.setItem('id',res.data.id)
-      setUser({...res.data})
-    })
-    .catch((err)=>{
-      toast.error("something went wrong")
-    })
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (info.username.trim() === '' || info.password === '') { return toast.error("input username and password") }
+    setLoading(true)
+    await axios.post(`${import.meta.env.VITE_URL}/login`, info, { withCredentials: true })
+      .then((res) => {
+
+        if (res.data === 'login failed') {
+          return toast.error("username or password incorrect")
+        }
+        toast.success("loged in successfully")
+        navigate(-1);
+        localStorage.setItem('id', res.data.id)
+        setUser({ ...res.data })
+      })
+      .catch((err) => {
+        toast.error("something went wrong")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
-  const forChange=(e)=>{
-    setInfo((preinfo)=>{
-      preinfo[e.target.name]=e.target.value;
-      return {...preinfo}
-    })
-  }
+
   
+  const forChange = (e) => {
+    setInfo((preinfo) => {
+      preinfo[e.target.name] = e.target.value;
+      return { ...preinfo }
+    })
+  }
+
   return (
     <div className="login_container">
       <h1>login</h1>
       <form onSubmit={submit} className='formpage'>
-      <div className='inpt'>
-        <input type="text" 
-        name='username'
-        placeholder='username'
-        value={info.username} 
-        onChange={forChange}
-        />
+        <div className='inpt'>
+          <input type="text"
+            name='username'
+            placeholder='username'
+            value={info.username}
+            onChange={forChange}
+          />
         </div>
-      <div className='inpt'>
-        <input type="password" 
-        name='password'
-        placeholder='password'
-        value={info.password}
-        onChange={forChange} 
-        />
+        <div className='inpt'>
+          <input type="password"
+            name='password'
+            placeholder='password'
+            value={info.password}
+            onChange={forChange}
+          />
         </div>
-      <Button btnName='Login'/>
+        <Button btnName='Login' />
       </form>
       <p>don't have account <Link to={'/signup'} className='link'>sign up</Link></p>
     </div>
