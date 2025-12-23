@@ -15,17 +15,19 @@ import './App.css'
 import PageNotFound from "./pages/PageNotFound";
 import Protectedrout from "./pages/protectedroute"
 import { context } from "./Context_API";
+import Loading from "./components/Loading";
 
 function App() {
-  
+  const [loading, setLoading]=useState(false)
   const [user ,setUser]=useState({id:localStorage.getItem('id')})
   const [search , setSearch]=useState('')
   
   return (
     <>
-    <context.Provider value={{search, setSearch, user, setUser}}>
+    <context.Provider value={{search, setSearch, user, setUser, setLoading}}>
     <Navbar/>
     <ToastContainer autoClose={2000}closeOnClick={true}position='top-center'closeButton={false}/>
+    {loading && <Loading/>}
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route element={<Iflogin/>}>

@@ -40,3 +40,15 @@
 .comment Button:active{
     background-color: rgb(0, 0, 0);
 }
+.confirmed { 
+    width: fit-content;
+    color: green; 
+    font-weight: bold; 
+    display: block;
+    margin:0 auto;
+    font-size: larger;
+    color: white;
+    background-color: green;
+    padding: 10px;
+    border-radius: 10px;
+}

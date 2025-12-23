@@ -3,3 +3,6 @@
     background-color: black;
     color: white;
 }
+.Toastify__toast-container {
+  z-index: 99999 !important;
+}
