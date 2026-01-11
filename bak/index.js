@@ -2,7 +2,7 @@ require('dotenv').config();
 const express=require("express");
 const path = require('path');
 const mongoose=require("mongoose");
-const User=require("./modules/users");
+const User=require("./models/users");
 const session=require('express-session');
 const MongoStore=require("connect-mongo");
 const passport=require("passport");
@@ -11,6 +11,7 @@ const listRoute=require('./routers/listroute');
 const reviewRoute=require('./routers/reviewroute');
 const userRoute=require('./routers/userroute');
 const striperout=require('./routers/striperoute')
+const bookingRoute=require('./routers/bookingRoute')
 
 const cors=require('cors')
 
@@ -61,8 +62,9 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use('/api/list',listRoute)//multipart
-app.use('/api/',userRoute)// json
+app.use('/api',userRoute)// json
 app.use('/api/list/:id/review',reviewRoute)//json
+app.use('/api/booking',bookingRoute)
 app.use('/api/create-payment-intent',striperout)
 
 

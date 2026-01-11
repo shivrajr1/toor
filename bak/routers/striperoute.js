@@ -1,10 +1,10 @@
-const express=require('express')
-const router=express.Router();
-const wrapasync=require('../utils/wrapasync')
-const {stripePayment}=require('../controlers/StripePayment')
+const express = require('express')
+const router = express.Router();
+const wrapasync = require('../utils/wrapasync')
+const { stripePayment } = require('../controllers/StripePayment')
 
 
 router.route("/").post(wrapasync(stripePayment))
 
 
-module.exports=router;
+module.exports = router;
