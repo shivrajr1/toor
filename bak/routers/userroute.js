@@ -5,7 +5,7 @@ const passport = require("passport");
 
 router.route("/login")
   .get(LoginFailed)
-  .post(passport.authenticate('local', { failureRedirect: "/login" })
+  .post(passport.authenticate('local', { failureRedirect: "/api/login" })
     , Login)
 
 router.route("/logout")
