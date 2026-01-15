@@ -1,6 +1,7 @@
 
 const wrapasync = require('../utils/wrapasync');
 const List = require('../models/lists');
+const Booking=require('../models/booking')
 const ExpressError = require("../utils/ExpressError");
 const { cloudinary } = require("../cloudJs");
 
@@ -26,7 +27,11 @@ module.exports.NewList = wrapasync(async (req, res, next) => {
 module.exports.ShowList = wrapasync(async (req, res) => {
   let { id } = req.params;
   let list = await List.findById(id).populate('reviews').populate('owner');
-  res.status(200).json(list);
+  if(!list){
+    res.status(400).json({message:'list does not exist'});
+  }
+  let booking=await Booking.findOne({list:list._id, user:req.user?._id})
+  res.status(200).json({list,booking});
 })
 
 module.exports.UpdateList = wrapasync(async (req, res, next) => {

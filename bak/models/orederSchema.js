@@ -1,3 +1,7 @@
+
+// temp schema it may delete further
+
+
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
