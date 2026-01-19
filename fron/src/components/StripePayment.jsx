@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import "./StripePayment.css";
 
-export default function StripePayment({ amount, setBookingStatus, open, onClose }) {
+export default function StripePayment({ amount, setBookingStatus, open, onClose ,id}) {
 
   const stripe = useStripe();
   const elements = useElements();
@@ -46,14 +46,20 @@ export default function StripePayment({ amount, setBookingStatus, open, onClose 
     }
 
     if (paymentIntent.status === "succeeded") {
-      toast.success("Payment Successful!");
+      let booked=await axios.post(`${import.meta.env.VITE_URL}/booking/${id}`,{amount}, { withCredentials: true })
+      if(booked.data.message=='Success'){
+        toast.success("Payment Successful!");
+      }else{
+        toast.success(booked.data.message);
+      }
+      
       setBookingStatus('confirmed')
       onClose();
     }
 
   } catch (err) {
-    console.error(err);
-    toast.error("Payment failed");
+    // console.error(err);
+    toast.error(err.message);
   }
 
   setLoading(false);
