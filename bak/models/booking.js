@@ -1,4 +1,5 @@
 
+const { number } = require("joi");
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
@@ -15,6 +16,10 @@ const bookingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'List',
         required: true,
+    },
+    amount:{
+        type:Number,
+        required:true
     }
 })
 
