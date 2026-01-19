@@ -43,9 +43,10 @@ export default function ShowList() {
       .get(`${import.meta.env.VITE_URL}/list/${id}`, { withCredentials: true })
       .then((res) => {
         setInfo((preinfo) => {
-          preinfo = res.data;
+          preinfo = res.data.list;
           return { ...preinfo }
         })
+        setBookingStatus(res.data.booking)
       })
       .catch((err) => {
         navigate('*');
@@ -84,7 +85,7 @@ export default function ShowList() {
         <Button btnName='Delete' />
       </span>
     </>
-  ) : bookingStatus === "confirmed" ? (
+  ) : (bookingStatus || bookingStatus === "confirmed") ? (
     <div className="booking-status">
       <span className="confirmed">Booked</span>
     </div>
@@ -98,6 +99,7 @@ export default function ShowList() {
       </button>
 
       <StripePayment
+        id={info._id}
         amount={info.price * 100}
         setBookingStatus={setBookingStatus}
         open={openPay}
